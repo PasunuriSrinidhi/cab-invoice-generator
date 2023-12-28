@@ -4,26 +4,26 @@ import org.junit.jupiter.api.Test;
 
 import com.example.*;
 
-public class CabTest {
+public class CabInvoiceGeneratorTest {
     CabInvoiceGenerator cabInvoiceGenerator = new CabInvoiceGenerator();
 
     // test calculate fare
     @Test
-    public void testCalculateFare() {
+    public void givenDistanceAndTime_Calculate_ReturnFare() {
         double fare = cabInvoiceGenerator.calculateFare(10, 20);
         assertEquals(120, fare);
     }
 
     // test minimum fare
     @Test
-    public void testMinimumFare() {
+    public void givenDistanceAndTime_Calculate_ReturnMinimumFare() {
         double fare = cabInvoiceGenerator.calculateFare(0, 0);
         assertEquals(5, fare);
     }
 
     // test for multiple rides
     @Test
-    public void testMultipleRideFare() {
+    public void givenMultipleRides_Calculate_ReturnAggregateTotal() {
         Ride[] rides = { new Ride(1, 5, 10, RideType.NORMAL), new Ride(1, 10, 20, RideType.NORMAL),
                 new Ride(1, 8, 15, RideType.NORMAL) };
         double totalFare = cabInvoiceGenerator.calculateFare(rides);
@@ -32,7 +32,7 @@ public class CabTest {
 
     // test for invoice
     @Test
-    public void testInvoice() {
+    public void givenDistanceAndTime_Calculate_ReturnNoofRidesAndTotalFareAndAvgFare() {
         Ride[] rides = { new Ride(1, 5, 10, RideType.NORMAL), new Ride(1, 10, 20, RideType.NORMAL),
                 new Ride(1, 8, 15, RideType.NORMAL) };
         Invoice invoice = cabInvoiceGenerator.generateInvoice(rides);
@@ -43,7 +43,7 @@ public class CabTest {
 
     // testing for invoice fetched by user_id
     @Test
-    public void testInvoiceForUser() {
+    public void givenUserId_GetListOfRides_ReturnInvoice() {
         // creating some new rides
         new Ride(1, 5, 10, RideType.NORMAL);
         new Ride(1, 10, 20, RideType.NORMAL);
@@ -57,7 +57,7 @@ public class CabTest {
 
     // testing by ride type
     @Test
-    public void testRidesWithType() {
+    public void givenNormalAndPremium_Calculate_ReturnTypesofRides() {
         Ride[] rides = { new Ride(1, 5, 10, RideType.NORMAL), new Ride(1, 10, 20, RideType.NORMAL),
                 new Ride(1, 8, 15, RideType.PREMIUM) };
         Invoice invoice = cabInvoiceGenerator.generateInvoice(rides);
